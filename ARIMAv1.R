@@ -1,11 +1,11 @@
 #################################################################
-## Script desenvolvido por Õcaro Agostino e Cristiane Melchior ##
+## Script desenvolvido por √çcaro Agostino e Cristiane Melchior ##
 #### Email: icaroagostino@gmail.com / crmelchior@gmail.com ######
 #################################################################
 
 #Junho/2018
 
-rm(list=ls()) #Limpando a memoria
+rm(list=ls()) #Limpando a mem√≥ria
 
 ########################
 # chamando bibliotecas #
@@ -14,31 +14,31 @@ rm(list=ls()) #Limpando a memoria
 library(tseries) #Manipular ST (Trapletti and Hornik, 2017)
 library(TSA) #Manipular ST (Chan and Ripley, 2012)
 library(lmtest) #Test. Hip. mod. lin. (Zeileis and Hothorn, 2002)
-library(forecast) #Modelos de previs„o (Hyndman and Khandakar, 2008)
+library(forecast) #Modelos de previs√£o (Hyndman and Khandakar, 2008)
 library(ggplot2) #Elegant Graphics (Wickham, 2009)
 #library(ggfortify) #Manipular graf. (ST) (Horikoshi and Tang, 2016)
 
-#Obs.:   a biblioteca 'ggfortify' È opcional, ela permite
+#Obs.:   a biblioteca 'ggfortify' √© opcional, ela permite
         #manipular melhor 'autoplot' para dados tipo ST.
 
 ########################
 ### Importando dados ###
 ########################
 
-# VocÍ precisa definir o diretÛrio onde est„o os dados,
-# Uma forma simples È usar o atalho "Ctrl + Shift + H"
+# Voc√™ precisa definir o diret√≥rio onde est√£o os dados,
+# Uma forma simples √© usar o atalho "Ctrl + Shift + H"
 
-# a forma mas simples importar dados È atravÈs de um txt,
+# a forma mas simples importar dados √© atrav√©s de um txt,
 # substitua o nome do arquivo no comando abaixo mantendo a
-# extenÁ„o ".txt"
+# exten√ß√£o ".txt"
 
 dados <- read.table("arquivo.txt", header=T) #lendo banco
 attach(dados) #tranformando em objeto
 
-# O primeiro argumento da funÁ„o 'ts' È o nome da vari·vel no
+# O primeiro argumento da fun√ß√£o 'ts' √© o nome da vari√°vel no
 # banco importado
 
-# start = data da primeira observaÁ„o
+# start = data da primeira observa√ß√£o
 # frequency = 1  (anual)
 # frequency = 4  (trimestral)
 # frequency = 12 (mensal)
@@ -51,62 +51,62 @@ x <- ts(x, start = , frequency = ) #tranformando em ST
 ###################################################
 
 ############################
-## Etapa 1: IdentificaÁ„o ##
+## Etapa 1: Identifica√ß√£o ##
 ############################
 
-# InspeÁ„o visual
+# Inspe√ß√£o visual
 
-autoplot(x) + xlab("frequencia") + ylab("Nome da vari·vel")
+autoplot(x) + xlab("frequencia") + ylab("Nome da vari√°vel")
 
 # Testes de raiz unitaria
 
-# para verificaÁ„o da estacionariedade È sugeredido o teste Kpss
+# para verifica√ß√£o da estacionariedade √© sugeredido o teste Kpss
 
-# Hipotese nula: a sÈrie È estacion·ria
+# Hipotese nula: a s√©rie √© estacion√°ria
 kpss.test(x)
 
-# Se identificado n„o estacionariedade aplicar diferenÁa
+# Se identificado n√£o estacionariedade aplicar diferen√ßa
 # e repetir o teste
 
-# verificaÁ„o da autocorrelaÁao (acf)
-# e aucorrelaÁao parical (pacf)
+# verifica√ß√£o da autocorrela√ßao (acf)
+# e aucorrela√ßao parical (pacf)
 
 ggtsdisplay(x) #ST + acf + pacf
-ggAcf(x) #funÁ„o de autocorrelaÁ„o
-ggPacf(x) #funÁ„o de autocorrelaÁ„o parcial
+ggAcf(x) #fun√ß√£o de autocorrela√ß√£o
+ggPacf(x) #fun√ß√£o de autocorrela√ß√£o parcial
 
 ########################
-## Etapa 2: EstimaÁ„o ##
+## Etapa 2: Estima√ß√£o ##
 ########################
 
-# para a estimaÁ„o dos parametros e ajuste do modelo
-# ser· utilizado a funÁ„o auto.arima(), que utiliza o algoritimo
+# para a estima√ß√£o dos parametros e ajuste do modelo
+# ser√° utilizado a fun√ß√£o auto.arima(), que utiliza o algoritimo
 # desenvolvido e publicado por Hyndman e Khandakar (2008)
-# que combina a aplicaÁ„o de testes de raÌzes unitarias,
-# minimizaÁ„o do AIC e MLE utilizado o procedimento stepwise
+# que combina a aplica√ß√£o de testes de ra√≠zes unitarias,
+# minimiza√ß√£o do AIC e MLE utilizado o procedimento stepwise
 
 ARIMA_auto <- auto.arima(x)
 ARIMA_auto #sai o modelo ajustado
 
-# Obs.: alguns autores sugerem n„o utilizar o nÌvel de sig.
-# como critÈrio de inclus„o de par‚metros
+# Obs.: alguns autores sugerem n√£o utilizar o n√≠vel de sig.
+# como crit√©rio de inclus√£o de par√¢metros
 
 # caso queira saber a sig dos modelos:
 coeftest(ARIMA_auto) #sai a sig. dos coeficientes (p-value)
 
-# EstimaÁ„o manual (ARIMA(p,d,q)):
+# Estima√ß√£o manual (ARIMA(p,d,q)):
 
 # ARIMA_manual <- Arima(x, order = c(1,0,0))
 
-# Obs: informe os par‚metros a serem estimados no argumento order
-# Lembrando que È possivel estimar diversos modelos concorrentes
-# E decidir o melhor modelo pelos critÈrios de AIC e BIC
+# Obs: informe os par√¢metros a serem estimados no argumento order
+# Lembrando que √© possivel estimar diversos modelos concorrentes
+# E decidir o melhor modelo pelos crit√©rios de AIC e BIC
 
 ###################################################
-## Etapa 3: ValidaÁ„o (VerificaÁ„o dos residuos) ##
+## Etapa 3: Valida√ß√£o (Verifica√ß√£o dos residuos) ##
 ###################################################
 
-# Verificar se os residuos s„o independentes (x)
+# Verificar se os residuos s√£o independentes (x)
 
 checkresiduals(forecast(ARIMA_auto)) #resid + ACF + Hist
 
@@ -119,19 +119,19 @@ autoplot(rstandard(ARIMA_auto)) +
   geom_hline(yintercept = -3, lty=2, col="4")
 
 #######################
-## Etapa 4: previs„o ##
+## Etapa 4: previs√£o ##
 #######################
 
-# Nessa etapa È definido o horizonte de previs„o (h)
+# Nessa etapa √© definido o horizonte de previs√£o (h)
 
 print(forecast(ARIMA_auto, h = ))
 autoplot(forecast(ARIMA_auto, h = ))
 accuracy(forecast(ARIMA_auto)) #periodo de treino
 
-# Como referÍncia para maiores detalhes sobre diversos 
-# aspesctos relacionados a previs„o fica como sugest„o
+# Como refer√™ncia para maiores detalhes sobre diversos 
+# aspesctos relacionados a previs√£o fica como sugest√£o
 # o livro 'Forecast principles and practice' (Hyndman e 
-# Athanasopoulos, 2018) o primeiro autor do livro È 
-# tambÈm criador do pacote 'forecast' utilizado neste
+# Athanasopoulos, 2018) o primeiro autor do livro √© 
+# tamb√©m criador do pacote 'forecast' utilizado neste
 # script e o livro pode ser lido online gratuitamente
 # em: https://otexts.org/fpp2/index.html
