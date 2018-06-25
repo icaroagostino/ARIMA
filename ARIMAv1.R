@@ -5,11 +5,14 @@
 
 #Junho/2018
 
-rm(list=ls()) #Limpando a memória
+rm(list=ls()) #Limpando a memoria
 
 ########################
 # chamando bibliotecas #
 ########################
+
+# caso não tenha instalado as bibliotecas abaixo use o comando:
+# install.packages('nome da biblioteca')
 
 library(tseries) #Manipular ST (Trapletti and Hornik, 2017)
 library(TSA) #Manipular ST (Chan and Ripley, 2012)
@@ -25,18 +28,17 @@ library(ggplot2) #Elegant Graphics (Wickham, 2009)
 ### Importando dados ###
 ########################
 
-# Você precisa definir o diretório onde estão os dados,
-# Uma forma simples é usar o atalho "Ctrl + Shift + H"
+# para este exemplo vamos importar um banco direto da internet
+# que está hospedado em https://github.com/icaroagostino/ARIMA
+# são dados mensais do saldo de emprego do estado do Maranhão
 
-# a forma mas simples importar dados é através de um txt,
-# substitua o nome do arquivo no comando abaixo mantendo a
-# extenção ".txt"
-
-dados <- read.table("arquivo.txt", header=T) #lendo banco
+dados <- read.table("https://raw.githubusercontent.com/icaroagostino/ARIMA/master/MA.txt", header=T) #lendo banco
 attach(dados) #tranformando em objeto
 
-# O primeiro argumento da função 'ts' é o nome da variável no
-# banco importado
+# precisamos tranformar os dados em ST utilizando o comando 'ts'
+# o primeiro argumento da função é o nome da variável no banco
+
+MA <- ts(MA, start = 2007, frequency = 12) #tranformando em ST
 
 # start = data da primeira observação
 # frequency = 1  (anual)
@@ -44,7 +46,15 @@ attach(dados) #tranformando em objeto
 # frequency = 12 (mensal)
 # frequency = 52 (semanal)
 
-x <- ts(x, start = , frequency = ) #tranformando em ST
+# caso queira importar direto do pc você precisa definir o 
+# diretório onde estão os dados, uma forma simples é usar
+# o atalho "Ctrl + Shift + H" ou através do comando abaixo
+
+# setwd(choose.dir())
+
+# a formato mais simples para importar dados é o txt,
+# substitua o nome do arquivo no comando read.table 
+# mantendo a extenção ".txt"
 
 ###################################################
 ### Seguindo a metodologia Box & Jenkins (1970) ###
@@ -56,14 +66,14 @@ x <- ts(x, start = , frequency = ) #tranformando em ST
 
 # Inspeção visual
 
-autoplot(x) + xlab("frequencia") + ylab("Nome da variável")
+autoplot(MA) + xlab("Anos") + ylab("Saldo de emprego - MA")
 
 # Testes de raiz unitaria
 
 # para verificação da estacionariedade é sugeredido o teste Kpss
 
 # Hipotese nula: a série é estacionária
-kpss.test(x)
+kpss.test(MA)
 
 # Se identificado não estacionariedade aplicar diferença
 # e repetir o teste
@@ -71,9 +81,9 @@ kpss.test(x)
 # verificação da autocorrelaçao (acf)
 # e aucorrelaçao parical (pacf)
 
-ggtsdisplay(x) #ST + acf + pacf
-ggAcf(x) #função de autocorrelação
-ggPacf(x) #função de autocorrelação parcial
+ggtsdisplay(MA) #ST + acf + pacf
+ggAcf(MA) #função de autocorrelação
+ggPacf(MA) #função de autocorrelação parcial
 
 ########################
 ## Etapa 2: Estimação ##
@@ -85,14 +95,14 @@ ggPacf(x) #função de autocorrelação parcial
 # que combina a aplicação de testes de raízes unitarias,
 # minimização do AIC e MLE utilizado o procedimento stepwise
 
-ARIMA_auto <- auto.arima(x)
-ARIMA_auto #sai o modelo ajustado
+ARIMA_MA <- auto.arima(MA)
+ARIMA_MA #sai o modelo ajustado
 
 # Obs.: alguns autores sugerem não utilizar o nível de sig.
 # como critério de inclusão de parâmetros
 
 # caso queira saber a sig dos modelos:
-coeftest(ARIMA_auto) #sai a sig. dos coeficientes (p-value)
+coeftest(ARIMA_MA) #sai a sig. dos coeficientes (p-value)
 
 # Estimação manual (ARIMA(p,d,q)):
 
@@ -106,13 +116,13 @@ coeftest(ARIMA_auto) #sai a sig. dos coeficientes (p-value)
 ## Etapa 3: Validação (Verificação dos residuos) ##
 ###################################################
 
-# Verificar se os residuos são independentes (x)
+# Verificar se os residuos são independentes (MA)
 
-checkresiduals(forecast(ARIMA_auto)) #resid + ACF + Hist
+checkresiduals(forecast(ARIMA_MA)) #resid + ACF + Hist
 
-# Verificar os residuos padronizados (x)
+# Verificar os residuos padronizados (MA)
 
-autoplot(rstandard(ARIMA_auto)) +
+autoplot(rstandard(ARIMA_MA)) +
   geom_hline(yintercept = 2, lty=3) +
   geom_hline(yintercept = -2, lty=3) +
   geom_hline(yintercept = 3, lty=2, col="4") +
@@ -124,9 +134,9 @@ autoplot(rstandard(ARIMA_auto)) +
 
 # Nessa etapa é definido o horizonte de previsão (h)
 
-print(forecast(ARIMA_auto, h = ))
-autoplot(forecast(ARIMA_auto, h = ))
-accuracy(forecast(ARIMA_auto)) #periodo de treino
+print(forecast(ARIMA_MA, h = 12))
+autoplot(forecast(ARIMA_MA, h = 12))
+accuracy(forecast(ARIMA_MA)) #periodo de treino
 
 # Como referência para maiores detalhes sobre diversos 
 # aspesctos relacionados a previsão fica como sugestão
@@ -135,3 +145,6 @@ accuracy(forecast(ARIMA_auto)) #periodo de treino
 # também criador do pacote 'forecast' utilizado neste
 # script e o livro pode ser lido online gratuitamente
 # em: https://otexts.org/fpp2/index.html
+
+# para referenciar as bibliotecas use o comando:
+# citation('nome da biblioteca')
