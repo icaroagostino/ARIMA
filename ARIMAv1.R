@@ -3,7 +3,7 @@
 #### Email: icaroagostino@gmail.com / crmelchior@gmail.com ######
 #################################################################
 
-#Junho/2018
+#Julho/2018
 
 rm(list=ls()) #Limpando a memoria
 
@@ -21,8 +21,8 @@ library(forecast) #Modelos de previsão (Hyndman and Khandakar, 2008)
 library(ggplot2) #Elegant Graphics (Wickham, 2009)
 #library(ggfortify) #Manipular graf. (ST) (Horikoshi and Tang, 2016)
 
-#Obs.:   a biblioteca 'ggfortify' é opcional, ela permite
-        #manipular melhor 'autoplot' para dados tipo ST.
+# Obs.: a biblioteca 'ggfortify' é opcional, ela permite
+# manipular melhor 'autoplot' para dados tipo ST.
 
 ########################
 ### Importando dados ###
@@ -32,7 +32,7 @@ library(ggplot2) #Elegant Graphics (Wickham, 2009)
 # que está hospedado em https://github.com/icaroagostino/ARIMA
 # são dados mensais do saldo de emprego do estado do Maranhão
 
-dados <- read.table("https://raw.githubusercontent.com/icaroagostino/ARIMA/master/MA.txt", header=T) #lendo banco
+dados <- read.table("https://raw.githubusercontent.com/icaroagostino/ARIMA/master/dados/MA.txt", header=T) #lendo banco
 attach(dados) #tranformando em objeto
 
 # precisamos tranformar os dados em ST utilizando o comando 'ts'
