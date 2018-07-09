@@ -95,14 +95,14 @@ ggPacf(MA) #função de autocorrelação parcial
 # que combina a aplicação de testes de raízes unitarias,
 # minimização do AIC e MLE utilizado o procedimento stepwise
 
-ARIMA_MA <- auto.arima(MA)
-ARIMA_MA #sai o modelo ajustado
+ARIMA_fit <- auto.arima(MA)
+ARIMA_fit #sai o modelo ajustado
 
 # Obs.: alguns autores sugerem não utilizar o nível de sig.
 # como critério de inclusão de parâmetros
 
 # caso queira saber a sig dos modelos:
-coeftest(ARIMA_MA) #sai a sig. dos coeficientes (p-value)
+coeftest(ARIMA_fit) #sai a sig. dos coeficientes (p-value)
 
 # Estimação manual (ARIMA(p,d,q)):
 
@@ -118,11 +118,11 @@ coeftest(ARIMA_MA) #sai a sig. dos coeficientes (p-value)
 
 # Verificar se os residuos são independentes (MA)
 
-checkresiduals(forecast(ARIMA_MA)) #resid + ACF + Hist
+checkresiduals(forecast(ARIMA_fit)) #resid + ACF + Hist
 
 # Verificar os residuos padronizados (MA)
 
-autoplot(rstandard(ARIMA_MA)) +
+autoplot(rstandard(ARIMA_fit)) +
   geom_hline(yintercept = 2, lty=3) +
   geom_hline(yintercept = -2, lty=3) +
   geom_hline(yintercept = 3, lty=2, col="4") +
@@ -134,9 +134,9 @@ autoplot(rstandard(ARIMA_MA)) +
 
 # Nessa etapa é definido o horizonte de previsão (h)
 
-print(forecast(ARIMA_MA, h = 12))
-autoplot(forecast(ARIMA_MA, h = 12))
-accuracy(forecast(ARIMA_MA)) #periodo de treino
+print(forecast(ARIMA_fit, h = 12))
+autoplot(forecast(ARIMA_fit, h = 12))
+accuracy(forecast(ARIMA_fit)) #periodo de treino
 
 # Como referência para maiores detalhes sobre diversos 
 # aspesctos relacionados a previsão fica como sugestão
