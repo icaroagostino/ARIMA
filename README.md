@@ -23,7 +23,7 @@ MA <- ts(MA, start = 2007, frequency = 12) #tranformando em Séries Temporal
 ggtsdisplay(MA, main="Saldo de emprego - MA")
 ```
 
-<img src="img/Exemplo MA/graf.png" align="center"/>
+<img src="Exemplo MA/graf.png" align="center"/>
 
 A série possui caracteristicas de sazonalidade aditiva com tendência moderada negativa, além disso a análise ACF permite evidenciar a presença de autocorrelação temporal entre as observações.
 
@@ -57,7 +57,7 @@ O modelo ajustado automaticamente considerou 1 parâmetro autorregressivo, 1 par
 checkresiduals(ARIMA_fit)
 ```
 
-<img src="img/Exemplo MA/res.png" align="center"/>
+<img src="Exemplo MA/res.png" align="center"/>
 
 Os resíduos gerados pelo modelo apresentaram caracteristicas de ruído branco.
 
@@ -67,7 +67,7 @@ Os resíduos gerados pelo modelo apresentaram caracteristicas de ruído branco.
 autoplot(forecast(ARIMA_fit, h = 12))
 ```
 
-<img src="img/Exemplo MA/prev.png" align="center"/>
+<img src="Exemplo MA/prev.png" align="center"/>
 
 ## Obs.
 
