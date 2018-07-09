@@ -49,7 +49,7 @@ ARIMA_fit #sai o modelo ajustado
 ## AIC=2062.91   AICc=2063.68   BIC=2079.43
 ```
 
-O modelo ajustado automaticamente considerou 1 parâmetro autorregressivo, 1 parâmetro de médias móveis, 2 parâmetros sazonais autorregressivos e 1 diferença sazonal de ordem 12 (meses), tais parâmetross podem e devem ser alterados a fim de buscar um melhor ajuste do modelo a partir do comando `Arima(x, order = c(1,0,0), seasonal = c(0, 0, 0))`, informe os parâmetros a serem estimados nos argumentos `order` e `seasonal`, lembrando que é possivel estimar diversos modelos concorrentes e decidir o melhor modelo pelos critérios de AIC e BIC.
+O modelo ajustado automaticamente considerou 1 parâmetro autorregressivo, 1 parâmetro de médias móveis, 2 parâmetros sazonais autorregressivos e 1 diferença sazonal de ordem 12 (meses), tais parâmetross podem e devem ser alterados a fim de buscar um melhor ajuste do modelo a partir do comando `Arima(x, order = c(0, 0, 0), seasonal = c(0, 0, 0))`, informe os parâmetros a serem estimados nos argumentos `order` e `seasonal`, lembrando que é possivel estimar diversos modelos concorrentes e decidir o melhor modelo pelos critérios de AIC e BIC.
 
 ## Verificação dos résiduos
 
@@ -69,8 +69,8 @@ autoplot(forecast(ARIMA_fit, h = 12))
 
 <img src="img/Exemplo MA/prev.png" align="center"/>
 
-## Obs.
+## Obs.:
 
-Os dados utilizados nesse exemplo são públicos, para mais detalhes baixe o script [ARIMA.R](https://github.com/icaroagostino/ARIMA/edit/master/ARIMA.R) que está [nesse](https://github.com/icaroagostino/ARIMA/) repositório.
+Os dados utilizados nesse exemplo são públicos, para mais detalhes baixe o script [ARIMA.R](https://github.com/icaroagostino/ARIMA/edit/master/ARIMA.R) que está [neste](https://github.com/icaroagostino/ARIMA/) repositório.
 
 contato: icaroagostino@gmail.com
