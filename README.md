@@ -1,7 +1,7 @@
 # **ARIMA**
 Aplicações em R para previsão de séries temporais utilizando modelagem ARIMA a partir do pacote [**forecast**](https://pkg.robjhyndman.com/forecast/).
 
-Uma versão extendida desse tutorial pode ser acessado em: https://icaroagostino.github.io/post/arima/
+Uma versão extendida desse tutorial pode ser acessada em: https://icaroagostino.github.io/post/arima/
 
 ## Aplicação
 
