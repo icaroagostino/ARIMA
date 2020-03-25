@@ -1,6 +1,8 @@
 # **ARIMA**
 Aplicações em R para previsão de séries temporais utilizando modelagem ARIMA a partir do pacote [**forecast**](https://pkg.robjhyndman.com/forecast/).
 
+Uma versão extendida desse tutorial pode ser acessado em: https://icaroagostino.github.io/post/arima/
+
 ## Aplicação
 
 As bibliotecas [**forecast**](https://cran.r-project.org/web/packages/forecast/) e [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/) são necessárias, utilize os comandos `install.packages('nome da biblioteca')` e `library(nome da biblioteca)` para instalar e carregar as bibliotecas.
